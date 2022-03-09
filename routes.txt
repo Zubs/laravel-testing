@@ -1,0 +1,13 @@
++--------+-----------+---------------------+--------------+------------------------------------------------------------+------------------------------------------+
+| Domain | Method    | URI                 | Name         | Action                                                     | Middleware                               |
++--------+-----------+---------------------+--------------+------------------------------------------------------------+------------------------------------------+
+|        | GET|HEAD  | /                   |              | Closure                                                    | web                                      |
+|        | GET|HEAD  | api/blog            | blog.index   | App\Http\Controllers\BlogController@index                  | api                                      |
+|        | POST      | api/blog            | blog.store   | App\Http\Controllers\BlogController@store                  | api                                      |
+|        | GET|HEAD  | api/blog/{blog}     | blog.show    | App\Http\Controllers\BlogController@show                   | api                                      |
+|        | PUT|PATCH | api/blog/{blog}     | blog.update  | App\Http\Controllers\BlogController@update                 | api                                      |
+|        | DELETE    | api/blog/{blog}     | blog.destroy | App\Http\Controllers\BlogController@destroy                | api                                      |
+|        | GET|HEAD  | api/user            |              | Closure                                                    | api                                      |
+|        |           |                     |              |                                                            | App\Http\Middleware\Authenticate:sanctum |
+|        | GET|HEAD  | sanctum/csrf-cookie |              | Laravel\Sanctum\Http\Controllers\CsrfCookieController@show | web                                      |
++--------+-----------+---------------------+--------------+------------------------------------------------------------+------------------------------------------+

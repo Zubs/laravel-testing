@@ -2,83 +2,81 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class BlogController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Collection|Post[]
      */
     public function index()
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        return Post::all();
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Post
      */
-    public function store(Request $request)
+    public function store(Request $request): Post
     {
-        //
+        $fields = $request->validate([
+            'title' => ['string', 'required'],
+            'body' => ['string', 'required']
+        ]);
+
+        return Post::create($fields);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Post
      */
-    public function show($id)
+    public function show(int $id): Post
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return Post::find($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param int $id
+     * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
-        //
+        $fields = $request->validate([
+            'title' => ['string', 'required'],
+            'body' => ['string', 'required']
+        ]);
+
+        $post = Post::find($id);
+        $post->update($fields);
+
+        return $post;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param int $id
+     * @return Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
-        //
+        $post = Post::find($id);
+        $post->delete();
+
+        return $post;
     }
 }
